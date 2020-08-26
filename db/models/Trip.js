@@ -6,6 +6,7 @@ const SequelizeSlugify = require("sequelize-slugify");
 
 class Trip extends Model {}
 
+//REVIEW: We don't need slugs. Remove the field and `SequelizeSlugify`.
 Trip.init(
   {
     title: {

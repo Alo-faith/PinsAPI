@@ -17,6 +17,7 @@ User.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    // REVIEW: we don't need roles
     role: {
       type: DataTypes.STRING,
       defaultValue: "customer",

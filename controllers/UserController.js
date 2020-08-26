@@ -43,8 +43,9 @@ exports.signup = async (req, res, next) => {
       firstName: newUser.firstName,
       lastName: newUser.lastName,
       role: newUser.role,
-      // postSlug: null,
-      // exp: Date.now() + JWT_EXPIRATION_MS,
+      // postSlug: null, //REVIEW: remove this please
+      // exp: Date.now() + JWT_EXPIRATION_MS, // REVIEW: you need the expiration time
+      // Same for signin
     };
     const token = jwt.sign(JSON.stringify(payload), JWT_SECRET);
     res.status(201).json({ token });

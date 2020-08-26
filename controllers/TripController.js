@@ -2,9 +2,11 @@
 const { User } = require("../db/models");
 
 const { Trip } = require("../db/models");
+// REVIEW: since they're imported from the same place, change it to const { User, Trip } = require("../db/models");
 
 // slug
 const slugify = require("slugify");
+// REVIEW: Do we need slug for mobile apps?
 
 // List
 exports.tripList = async (req, res, next) => {
@@ -37,7 +39,7 @@ exports.tripCreate = async (req, res, next) => {
     //     req.file.filename
     //   }`;
     // }
-
+    // REVIEW: If code is working, remove the extra console log
     req.body.userId = req.user.id;
     console.log("//////////", req.body);
     const newTrip = await Trip.create(req.body);

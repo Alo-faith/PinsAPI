@@ -32,15 +32,6 @@ exports.fetchTrip = async (tripId, next) => {
 //   Create
 exports.tripCreate = async (req, res, next) => {
   try {
-    // const foundTrip = await Trip.findOne({ where: { userId: req.user.id } });
-
-    // if (foundTrip) {
-    //   const err = new Error("you already have a trip");
-
-    //   err.status = 403;
-    //   return next(err);
-    // }
-
     // if (req.file) {
     //   req.body.image = `${req.protocol}://${req.get("host")}/media/${
     //     req.file.filename
@@ -48,7 +39,7 @@ exports.tripCreate = async (req, res, next) => {
     // }
 
     req.body.userId = req.user.id;
-    console.log("//////////", req.body.userId);
+    console.log("//////////", req.body);
     const newTrip = await Trip.create(req.body);
 
     res.status(201).json(newTrip);

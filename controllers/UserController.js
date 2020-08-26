@@ -5,6 +5,28 @@ const jwt = require("jsonwebtoken");
 // Database
 const { User } = require("../db/models");
 
+exports.userList = async (req, res, next) => {
+  try {
+    const users = await User.findAll({
+      attributes: { exclude: ["createdAt", "updatedAt"] },
+    });
+
+    res.json(users);
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.fetchUses = async (userId, next) => {
+  try {
+    const users = await User.findByPk(userId);
+
+    return users;
+  } catch (error) {
+    next(error);
+  }
+};
+
 exports.signup = async (req, res, next) => {
   const { password } = req.body;
 

@@ -42,6 +42,7 @@ router.post(
 // Delete
 router.delete(
   "/:tripId",
+
   passport.authenticate("jwt", { session: false }),
   tripDelete
 );

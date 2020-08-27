@@ -9,6 +9,7 @@ Trip.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    // REVIEW: You don't need the slug
     slug: {
       type: DataTypes.STRING,
       unique: true,

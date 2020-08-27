@@ -1,9 +1,6 @@
 const { DataTypes, Model } = require("sequelize");
 const db = require("../db");
 
-//   slug
-const SequelizeSlugify = require("sequelize-slugify");
-
 class Trip extends Model {}
 
 Trip.init(
@@ -29,7 +26,5 @@ Trip.init(
     sequelize: db,
   }
 );
-SequelizeSlugify.slugifyModel(Trip, {
-  source: ["title"],
-});
+
 module.exports = Trip;

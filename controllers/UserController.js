@@ -17,6 +17,7 @@ exports.fetchUsers = async (userId, next) => {
 
 exports.userList = async (req, res, next) => {
   try {
+    // REVIEW: Here you can exclude the password
     const users = await User.findAll({
       attributes: { exclude: ["createdAt", "updatedAt"] },
     });

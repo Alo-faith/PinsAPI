@@ -42,7 +42,7 @@ router.post(
 // Delete
 router.delete(
   "/:tripId",
-
+  // REVIEW: Remove extra space
   passport.authenticate("jwt", { session: false }),
   tripDelete
 );

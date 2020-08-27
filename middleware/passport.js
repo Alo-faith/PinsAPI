@@ -6,7 +6,7 @@ const LocalStrategy = require("passport-local").Strategy;
 const JWTStrategy = require("passport-jwt").Strategy;
 const { fromAuthHeaderAsBearerToken } = require("passport-jwt").ExtractJwt;
 
-// madals
+// madals  REVIEW: typo: Models
 const { User } = require("../db/models");
 
 exports.localStrategy = new LocalStrategy(async (username, password, done) => {

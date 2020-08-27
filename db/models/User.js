@@ -19,7 +19,7 @@ User.init(
     },
     role: {
       type: DataTypes.STRING,
-      defaultValue: "customer",
+      defaultValue: "user",
     },
 
     firstName: {
@@ -30,6 +30,9 @@ User.init(
     },
 
     email: {
+      type: DataTypes.STRING,
+    },
+    image: {
       type: DataTypes.STRING,
     },
   },

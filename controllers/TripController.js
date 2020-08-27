@@ -1,10 +1,5 @@
 // Data
-const { User } = require("../db/models");
-
-const { Trip } = require("../db/models");
-
-// slug
-const slugify = require("slugify");
+const { User, Trip } = require("../db/models");
 
 // List
 exports.tripList = async (req, res, next) => {
@@ -32,14 +27,13 @@ exports.fetchTrip = async (tripId, next) => {
 //   Create
 exports.tripCreate = async (req, res, next) => {
   try {
-    // if (req.file) {
-    //   req.body.image = `${req.protocol}://${req.get("host")}/media/${
-    //     req.file.filename
-    //   }`;
-    // }
+    if (req.file) {
+      req.body.image = `${req.protocol}://${req.get("host")}/media/${
+        req.file.filename
+      }`;
+    }
 
     req.body.userId = req.user.id;
-    console.log("//////////", req.body);
     const newTrip = await Trip.create(req.body);
 
     res.status(201).json(newTrip);
@@ -68,11 +62,11 @@ exports.tripDelete = async (req, res, next) => {
 exports.tripUpdate = async (req, res, next) => {
   try {
     if (req.user.role === "admin" || req.user.id === req.trip.userId) {
-      // if (req.file) {
-      //   req.body.image = `${req.protocol}://${req.get("host")}/media/${
-      //     req.file.filename
-      //   }`;
-      // }
+      if (req.file) {
+        req.body.image = `${req.protocol}://${req.get("host")}/media/${
+          req.file.filename
+        }`;
+      }
 
       await req.trip.update(req.body);
       res.status(204).end();

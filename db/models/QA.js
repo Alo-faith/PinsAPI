@@ -1,20 +1,16 @@
 const { DataTypes, Model } = require("sequelize");
 const db = require("../db");
 
-class Trip extends Model {}
+class QA extends Model {}
 
-Trip.init(
+QA.init(
   {
-    title: {
+    q: {
       type: DataTypes.STRING,
       allowNull: false,
     },
 
-    image: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    details: {
+    a: {
       type: DataTypes.STRING,
     },
   },
@@ -23,4 +19,4 @@ Trip.init(
   }
 );
 
-module.exports = Trip;
+module.exports = QA;

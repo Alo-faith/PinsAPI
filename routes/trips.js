@@ -7,6 +7,7 @@ const {
   tripUpdate,
   tripDelete,
   fetchTrip,
+  qCreate,
 } = require("../controllers/TripController");
 
 // Middleware
@@ -17,7 +18,6 @@ const router = express.Router();
 
 router.param("tripId", async (req, res, next, tripId) => {
   const trip = await fetchTrip(tripId, next);
-  console.log(trip);
   if (trip) {
     req.trip = trip;
     next();
@@ -54,5 +54,7 @@ router.put(
   upload.single("image"),
   tripUpdate
 );
+// Create Q
+router.post("/:tripId/q", qCreate);
 
 module.exports = router;

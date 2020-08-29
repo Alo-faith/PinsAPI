@@ -18,7 +18,7 @@ exports.fetchUsers = async (userId, next) => {
 exports.userList = async (req, res, next) => {
   try {
     const users = await User.findAll({
-      attributes: { exclude: ["createdAt", "updatedAt"] },
+      attributes: { exclude: ["password", "createdAt", "updatedAt"] },
     });
 
     res.json(users);
@@ -42,7 +42,6 @@ exports.signup = async (req, res, next) => {
       email: newUser.email,
       firstName: newUser.firstName,
       lastName: newUser.lastName,
-      role: newUser.role,
 
       // exp: Date.now() + JWT_EXPIRATION_MS,
     };
@@ -56,8 +55,6 @@ exports.signup = async (req, res, next) => {
 exports.signin = async (req, res, next) => {
   const { user } = req;
 
-  // const post = await post.findOne({ where: { userId: user.id } });
-
   const payload = {
     id: user.id,
     username: user.username,
@@ -65,8 +62,6 @@ exports.signin = async (req, res, next) => {
     firstName: user.firstName,
     lastName: user.lastName,
     image: user.image,
-    role: user.role,
-    // postSlug: post ? post.slug : null,
 
     // exp: Date.now() + JWT_EXPIRATION_MS,
   };
@@ -77,20 +72,20 @@ exports.signin = async (req, res, next) => {
 // Update
 exports.userUpdate = async (req, res, next) => {
   try {
-    if (req.user.role === "admin" || req.user.id === req.trip.userId) {
-      if (req.file) {
-        req.body.image = `${req.protocol}://${req.get("host")}/media/${
-          req.file.filename
-        }`;
-      }
-
-      await req.user.update(req.body);
-      res.status(204).end();
-    } else {
-      const err = new Error("Unauthoized");
-      err.status = 401;
-      next(err);
+    // if (req.user.id === req.body.id) {
+    if (req.file) {
+      req.body.image = `${req.protocol}://${req.get("host")}/media/${
+        req.file.filename
+      }`;
     }
+
+    await req.user.update(req.body);
+    res.status(204).end();
+    // } else {
+    //   const err = new Error("Unauthoized");
+    //   err.status = 401;
+    //   next(err);
+    //}
   } catch (error) {
     next(error);
   }

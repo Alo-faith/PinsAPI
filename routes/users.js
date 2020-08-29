@@ -15,7 +15,7 @@ const {
 
 router.param("userId", async (req, res, next, userId) => {
   const user = await fetchUsers(userId, next);
-  console.log("//////////", user);
+
   if (user) {
     req.user = user;
     next();

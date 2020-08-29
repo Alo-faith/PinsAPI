@@ -17,7 +17,7 @@ const { jwtStrategy } = require("./middleware/passport");
 const userRoutes = require("./routes/users");
 const tripRoutes = require("./routes/trips");
 const path = require("path");
-
+const qaRoutes = require("./routes/qa");
 const app = express();
 
 app.use(cors());
@@ -31,7 +31,7 @@ passport.use(jwtStrategy);
 app.use("/trips", tripRoutes);
 app.use("/media", express.static(path.join(__dirname, "media")));
 app.use(userRoutes);
-
+app.use("/qa", qaRoutes);
 // Not found path
 app.use((req, res, next) => {
   const error = new Error("Path Not Found");

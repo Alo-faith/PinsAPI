@@ -3,6 +3,10 @@ const db = require("../db");
 
 class User extends Model {}
 
+// You need to have a Profile model.
+// We'll go over it in your Standup on Monday.
+// Luckily, Q&A features don't depend on Profile features.
+
 User.init(
   {
     username: {

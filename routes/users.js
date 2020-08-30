@@ -31,6 +31,7 @@ router.get("/", userList);
 
 // Signup
 router.post("/signup", signup);
+
 // signin
 router.post(
   "/signin",
@@ -38,6 +39,11 @@ router.post(
   signin
 );
 
+// you don't need a user update.
+// You can add a Feature where the user can update
+// their first name, last name, email, and username.
+// but don't build it for now, add it as a card in the Trello board's Icebox list
+// Keep this comment here, we'll discuss it further in your Standup meeting on Monday.
 // Update
 router.put(
   "/:userId",

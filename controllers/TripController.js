@@ -14,6 +14,7 @@ exports.tripList = async (req, res, next) => {
   }
 };
 
+// should move this method to the top of the file.
 exports.fetchTrip = async (tripId, next) => {
   try {
     const trip = await Trip.findByPk(tripId);
@@ -24,7 +25,7 @@ exports.fetchTrip = async (tripId, next) => {
   }
 };
 
-//   Create
+// Create
 exports.tripCreate = async (req, res, next) => {
   try {
     if (req.file) {
@@ -42,7 +43,7 @@ exports.tripCreate = async (req, res, next) => {
   }
 };
 
-//   Delete
+// Delete
 exports.tripDelete = async (req, res, next) => {
   try {
     if (req.user.id === req.trip.userId) {
@@ -82,8 +83,8 @@ exports.tripUpdate = async (req, res, next) => {
 //   Create Q
 exports.qCreate = async (req, res, next) => {
   try {
-    //  if (req.user.id !== req.trip.userId)
-    console.log(">>>>>", req.body);
+    //  if (req.user.id !== req.trip.userId) // you won't need this permissions for asking questions
+    console.log(">>>>>", req.body); // remove console logs before pushing.
     req.body.tripId = req.trip.id;
 
     const newQ = await QA.create(req.body);

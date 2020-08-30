@@ -1,5 +1,8 @@
 const express = require("express");
 
+// Give this file a more meaningful name.
+// I still don't know what this means until I read the code. Bad naming.
+
 // Controllers
 const {
   qaList,
@@ -12,6 +15,11 @@ const {
 const passport = require("passport");
 
 const router = express.Router();
+
+/**
+ * * At this point, you should create a new branch just to rename all the "qa"s,
+ * * Then test the BE to make sure everything still works.
+ */
 
 router.param("qaId", async (req, res, next, qaId) => {
   const qa = await fetchQA(qaId, next);
@@ -28,6 +36,7 @@ router.param("qaId", async (req, res, next, qaId) => {
 // List
 router.get("/", qaList);
 
+// theres no delete feature, remove this route
 // Delete
 router.delete(
   "/:qaId",
@@ -35,6 +44,7 @@ router.delete(
   qaDelete
 );
 
+// theres no update feature, remove this route
 // Update
 router.put(
   "/:qaId",

@@ -12,6 +12,10 @@ exports.fetchQA = async (qaId, next) => {
 };
 
 // List
+// this controller should return a list of questions
+// and each question's answer
+// this'll change when you change the models
+// take your time building the feature, don't rush it.
 exports.qaList = async (req, res, next) => {
   try {
     const qa = await QA.findAll({});
@@ -22,7 +26,8 @@ exports.qaList = async (req, res, next) => {
   }
 };
 
-//   Delete
+// Delete
+// theres no delete feature, remove this controller.
 exports.qaDelete = async (req, res, next) => {
   try {
     if (req.user.id === req.qa.userId) {
@@ -39,6 +44,7 @@ exports.qaDelete = async (req, res, next) => {
 };
 
 // Update
+// theres no update feature, remove this controller.
 exports.qaUpdate = async (req, res, next) => {
   try {
     // console.log(",,,,", req.qa.userId);

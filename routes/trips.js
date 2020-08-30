@@ -42,7 +42,6 @@ router.post(
 // Delete
 router.delete(
   "/:tripId",
-
   passport.authenticate("jwt", { session: false }),
   tripDelete
 );
@@ -54,6 +53,7 @@ router.put(
   upload.single("image"),
   tripUpdate
 );
+
 // Create Q
 router.post("/:tripId/q", qCreate);
 

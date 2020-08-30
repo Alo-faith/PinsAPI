@@ -2,7 +2,6 @@ const express = require("express");
 
 // Controllers
 const {
-  qaCreate,
   qaList,
   qaUpdate,
   qaDelete,
@@ -39,7 +38,7 @@ router.delete(
 // Update
 router.put(
   "/:qaId",
-  passport.authenticate("jwt", { session: false }),
+  // passport.authenticate("jwt", { session: false }),
   qaUpdate
 );
 

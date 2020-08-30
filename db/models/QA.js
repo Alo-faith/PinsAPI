@@ -13,6 +13,9 @@ QA.init(
     a: {
       type: DataTypes.STRING,
     },
+    userId: {
+      type: DataTypes.INTEGER,
+    },
   },
   {
     sequelize: db,

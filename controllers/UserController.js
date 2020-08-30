@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 // Database
 const { User } = require("../db/models");
 
+// rename to `fetchUser` (singular)
 exports.fetchUsers = async (userId, next) => {
   try {
     const users = await User.findByPk(userId);
@@ -15,6 +16,12 @@ exports.fetchUsers = async (userId, next) => {
   }
 };
 
+/**
+ * * What is this controller for? Do you ever need a list of users?
+ * * Which Feature in the project's Trello board is this for?
+ * * Why do you need a list of users?
+ * ? The answer is no, you don't need it.
+ */
 exports.userList = async (req, res, next) => {
   try {
     const users = await User.findAll({
@@ -35,6 +42,9 @@ exports.signup = async (req, res, next) => {
     const hashedPassword = await bcrypt.hash(password, saltRounds);
     req.body.password = hashedPassword;
     const newUser = await User.create(req.body);
+
+    // In your standup on Monday, we'll discuss the Profile features
+    // which will make changes to your code here
 
     const payload = {
       id: newUser.id,
@@ -63,7 +73,7 @@ exports.signin = async (req, res, next) => {
     lastName: user.lastName,
     image: user.image,
 
-    // exp: Date.now() + JWT_EXPIRATION_MS,
+    // exp: Date.now() + JWT_EXPIRATION_MS, // why is this commented?
   };
   const token = jwt.sign(JSON.stringify(payload), JWT_SECRET);
   res.json({ token });

@@ -83,8 +83,6 @@ exports.tripUpdate = async (req, res, next) => {
 exports.qCreate = async (req, res, next) => {
   try {
     //  if (req.user.id !== req.trip.userId)
-    console.log(">>>>>", req.body);
-    req.body.tripId = req.trip.id;
 
     const newQ = await QA.create(req.body);
 

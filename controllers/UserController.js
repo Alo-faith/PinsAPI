@@ -3,12 +3,11 @@ const { JWT_SECRET, JWT_EXPIRATION_MS } = require("../config/keys");
 const jwt = require("jsonwebtoken");
 
 // Database
-const { User } = require("../db/models");
+const { User, List } = require("../db/models");
 
-exports.fetchUsers = async (userId, next) => {
+exports.fetchUser = async (userId, next) => {
   try {
     const users = await User.findByPk(userId);
-
     return users;
   } catch (error) {
     next(error);
@@ -85,7 +84,36 @@ exports.userUpdate = async (req, res, next) => {
     //   const err = new Error("Unauthoized");
     //   err.status = 401;
     //   next(err);
-    //}
+    // }
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Create List
+exports.createList = async (req, res, next) => {
+  try {
+    req.body.userId = req.user.id;
+
+    const newList = await List.create(req.body);
+
+    res.status(201).json(newList);
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Delete
+exports.deleteUser = async (req, res, next) => {
+  try {
+    // if (req.user.id === req.body.user.id) {
+    await req.user.destroy();
+    res.status(204).end();
+    // } else {
+    //   const err = new Error("Unauthoized");
+    //   err.status = 401;
+    //   next(err);
+    // }
   } catch (error) {
     next(error);
   }

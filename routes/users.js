@@ -10,11 +10,13 @@ const {
   signin,
   userList,
   userUpdate,
-  fetchUsers,
+  deleteUser,
+  fetchUser,
+  createList,
 } = require("../controllers/userController");
 
 router.param("userId", async (req, res, next, userId) => {
-  const user = await fetchUsers(userId, next);
+  const user = await fetchUser(userId, next);
 
   if (user) {
     req.user = user;
@@ -37,6 +39,12 @@ router.post(
   passport.authenticate("local", { session: false }),
   signin
 );
+// Delete
+router.delete(
+  "/:userId",
+  // passport.authenticate("jwt", { session: false }),
+  deleteUser
+);
 
 // Update
 router.put(
@@ -44,6 +52,13 @@ router.put(
   passport.authenticate("jwt", { session: false }),
   upload.single("image"),
   userUpdate
+);
+
+// Create list
+router.post(
+  "/:userId/list",
+  passport.authenticate("jwt", { session: false }),
+  createList
 );
 
 module.exports = router;

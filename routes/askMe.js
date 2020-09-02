@@ -2,44 +2,44 @@ const express = require("express");
 
 // Controllers
 const {
-  qaList,
-  qaUpdate,
-  qaDelete,
-  fetchQA,
-} = require("../controllers/QAcontroller");
+  askMeList,
+  answerUpdate,
+  askMeDelete,
+  fetchAskMe,
+} = require("../controllers/AskMeController");
 
 // Middleware
 const passport = require("passport");
 
 const router = express.Router();
 
-router.param("qaId", async (req, res, next, qaId) => {
-  const qa = await fetchQA(qaId, next);
-  if (qa) {
-    req.qa = qa;
+router.param("askMeId", async (req, res, next, askMeId) => {
+  const askMe = await fetchAskMe(askMeId, next);
+  if (askMe) {
+    req.askMe = askMe;
     next();
   } else {
-    const err = new Error(" not found");
+    const err = new Error("not found");
     err.status = 404;
     next(err);
   }
 });
 
 // List
-router.get("/", qaList);
+router.get("/", askMeList);
 
 // Delete
 router.delete(
-  "/:qaId",
+  "/:askMeId",
   passport.authenticate("jwt", { session: false }),
-  qaDelete
+  askMeDelete
 );
 
 // Update
 router.put(
-  "/:qaId",
+  "/:askMeId",
   // passport.authenticate("jwt", { session: false }),
-  qaUpdate
+  answerUpdate
 );
 
 module.exports = router;

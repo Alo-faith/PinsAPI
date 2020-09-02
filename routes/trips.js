@@ -7,7 +7,7 @@ const {
   tripUpdate,
   tripDelete,
   fetchTrip,
-  qCreate,
+  createQuestion,
 } = require("../controllers/TripController");
 
 // Middleware
@@ -53,7 +53,7 @@ router.put(
   upload.single("image"),
   tripUpdate
 );
-// Create Q
-router.post("/:tripId/q", qCreate);
+// Create question
+router.post("/:tripId/askme", createQuestion);
 
 module.exports = router;

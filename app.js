@@ -1,5 +1,5 @@
 const express = require("express");
-// cos
+// cors
 const cors = require("cors");
 
 // body
@@ -10,14 +10,14 @@ const db = require("./db");
 // passport
 const passport = require("passport");
 
-const { localStrategy } = require("./middleware/passport");
-const { jwtStrategy } = require("./middleware/passport");
+const { localStrategy, jwtStrategy } = require("./middleware/passport");
 
 // Route
 const userRoutes = require("./routes/users");
 const tripRoutes = require("./routes/trips");
 const path = require("path");
-const qaRoutes = require("./routes/qa");
+const askMeRoutes = require("./routes/askMe");
+const listRoutes = require("./routes/list");
 const app = express();
 
 app.use(cors());
@@ -31,8 +31,11 @@ passport.use(jwtStrategy);
 app.use("/trips", tripRoutes);
 app.use("/media", express.static(path.join(__dirname, "media")));
 app.use(userRoutes);
-app.use("/qa", qaRoutes);
+app.use("/askme", askMeRoutes);
+app.use("/list", listRoutes);
+
 // Not found path
+
 app.use((req, res, next) => {
   const error = new Error("Path Not Found");
   error.status = 404;
@@ -40,6 +43,7 @@ app.use((req, res, next) => {
 });
 
 // Error Handling Middlewae
+
 app.use((err, req, res, next) => {
   res.status(err.status || 500);
   res.json(err.message || " Internal Server Error");

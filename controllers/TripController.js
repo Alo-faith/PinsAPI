@@ -1,5 +1,14 @@
 // Data
-const { Trip, QA } = require("../db/models");
+const { Trip, AskMe } = require("../db/models");
+
+exports.fetchTrip = async (tripId, next) => {
+  try {
+    const trip = await Trip.findByPk(tripId);
+    return trip;
+  } catch (error) {
+    next(error);
+  }
+};
 
 // List
 exports.tripList = async (req, res, next) => {
@@ -14,17 +23,7 @@ exports.tripList = async (req, res, next) => {
   }
 };
 
-exports.fetchTrip = async (tripId, next) => {
-  try {
-    const trip = await Trip.findByPk(tripId);
-
-    return trip;
-  } catch (error) {
-    next(error);
-  }
-};
-
-//   Create
+// Create
 exports.tripCreate = async (req, res, next) => {
   try {
     if (req.file) {
@@ -42,7 +41,7 @@ exports.tripCreate = async (req, res, next) => {
   }
 };
 
-//   Delete
+// Delete
 exports.tripDelete = async (req, res, next) => {
   try {
     if (req.user.id === req.trip.userId) {
@@ -80,11 +79,10 @@ exports.tripUpdate = async (req, res, next) => {
   }
 };
 //   Create Q
-exports.qCreate = async (req, res, next) => {
+exports.createQuestion = async (req, res, next) => {
   try {
-    //  if (req.user.id !== req.trip.userId)
-
-    const newQ = await QA.create(req.body);
+    const newQ = await AskMe.create(req.body);
+    console.log("............req.body", req.body);
 
     res.status(201).json(newQ);
   } catch (error) {

@@ -1,20 +1,17 @@
 const { DataTypes, Model } = require("sequelize");
 const db = require("../db");
 
-class QA extends Model {}
+class List extends Model {}
 
-QA.init(
+List.init(
   {
-    q: {
+    title: {
       type: DataTypes.STRING,
       allowNull: false,
-    },
-
-    a: {
-      type: DataTypes.STRING,
-    },
-    userId: {
-      type: DataTypes.INTEGER,
+      unique: {
+        args: true,
+        msg: "Username already exists",
+      },
     },
   },
   {
@@ -22,4 +19,4 @@ QA.init(
   }
 );
 
-module.exports = QA;
+module.exports = List;

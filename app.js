@@ -4,20 +4,21 @@ const cors = require("cors");
 
 // body
 const bodyParser = require("body-parser");
+
 // db
 const db = require("./db");
 
 // passport
 const passport = require("passport");
-
 const { localStrategy, jwtStrategy } = require("./middleware/passport");
 
 // Route
 const userRoutes = require("./routes/users");
 const tripRoutes = require("./routes/trips");
-const path = require("path");
+const path = require("path"); // not a route, move it up
 const askMeRoutes = require("./routes/askMe");
 const listRoutes = require("./routes/list");
+
 const app = express();
 
 app.use(cors());

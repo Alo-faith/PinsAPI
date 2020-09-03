@@ -1,7 +1,7 @@
 const { DataTypes, Model } = require("sequelize");
 const db = require("../db");
 
-class Trip extends Model {}
+class Trip extends Model { }
 
 Trip.init(
   {

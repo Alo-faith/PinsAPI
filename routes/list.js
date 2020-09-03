@@ -32,6 +32,7 @@ router.get("/", list);
 // Delete
 router.delete(
   "/:listId",
+  // you need this passport to set permissions
   // passport.authenticate("jwt", { session: false }),
   deleteList
 );

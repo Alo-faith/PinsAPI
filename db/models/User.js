@@ -1,7 +1,7 @@
 const { DataTypes, Model } = require("sequelize");
 const db = require("../db");
 
-class User extends Model {}
+class User extends Model { }
 
 User.init(
   {
@@ -31,6 +31,7 @@ User.init(
     image: {
       type: DataTypes.STRING,
     },
+    // missing bio field. Profiles should have a bio
   },
   {
     sequelize: db,

@@ -53,6 +53,7 @@ router.put(
   upload.single("image"),
   tripUpdate
 );
+
 // Create question
 router.post("/:tripId/askme", createQuestion);
 

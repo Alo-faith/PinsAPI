@@ -38,6 +38,7 @@ router.delete(
 // Update
 router.put(
   "/:askMeId",
+  // you need this passport middleware so that only logged in users can update
   // passport.authenticate("jwt", { session: false }),
   answerUpdate
 );

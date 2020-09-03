@@ -13,7 +13,7 @@ exports.fetchAskMe = async (askMeId, next) => {
 // List
 exports.askMeList = async (req, res, next) => {
   try {
-    const askMe = await AskMe.findAll({});
+    const askMe = await AskMe.findAll();
 
     res.json(askMe);
   } catch (error) {
@@ -21,7 +21,7 @@ exports.askMeList = async (req, res, next) => {
   }
 };
 
-//   Delete
+// Delete
 exports.askMeDelete = async (req, res, next) => {
   try {
     if (req.user.id === req.askMe.userId) {
@@ -40,7 +40,9 @@ exports.askMeDelete = async (req, res, next) => {
 // Update
 exports.answerUpdate = async (req, res, next) => {
   try {
+    // remove console log
     // console.log(",,,,", req.askMe.userId);
+    // you need this condition to set permissions
     // if (req.user.id === req.askMe.userId) {
     await req.askMe.update(req.body);
     res.status(204).end();

@@ -33,12 +33,14 @@ router.get("/", userList);
 
 // Signup
 router.post("/signup", signup);
+
 // signin
 router.post(
   "/signin",
   passport.authenticate("local", { session: false }),
   signin
 );
+
 // Delete
 router.delete(
   "/:userId",
@@ -54,6 +56,9 @@ router.put(
   userUpdate
 );
 
+// you don't need the parameter here
+// you're using the logged in user's ID
+// as you should.
 // Create list
 router.post(
   "/:userId/list",

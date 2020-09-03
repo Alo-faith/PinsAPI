@@ -13,6 +13,7 @@ exports.fetchList = async (listId, next) => {
 // List
 exports.list = async (req, res, next) => {
   try {
+    // why remove exclude?
     const list = await List.findAll({
       // attributes: { exclude: ["createdAt", "updatedAt"] },
     });
@@ -26,6 +27,7 @@ exports.list = async (req, res, next) => {
 // Delete
 exports.deleteList = async (req, res, next) => {
   try {
+    // bring back this condition to set permissions
     //  if (req.user.id === req.list.userId) {
     await req.list.destroy();
     res.status(204).end();

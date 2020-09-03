@@ -13,6 +13,8 @@ exports.fetchTrip = async (tripId, next) => {
 // List
 exports.tripList = async (req, res, next) => {
   try {
+    // why is exclude commented out?
+    // if you won't use it, remove it.
     const trips = await Trip.findAll({
       // attributes: { exclude: ["createdAt", "updatedAt"] },
     });
@@ -29,7 +31,7 @@ exports.tripCreate = async (req, res, next) => {
     if (req.file) {
       req.body.image = `${req.protocol}://${req.get("host")}/media/${
         req.file.filename
-      }`;
+        }`;
     }
 
     req.body.userId = req.user.id;
@@ -64,7 +66,7 @@ exports.tripUpdate = async (req, res, next) => {
       if (req.file) {
         req.body.image = `${req.protocol}://${req.get("host")}/media/${
           req.file.filename
-        }`;
+          }`;
       }
 
       await req.trip.update(req.body);
@@ -78,11 +80,12 @@ exports.tripUpdate = async (req, res, next) => {
     next(error);
   }
 };
-//   Create Q
+
+// Create Q
 exports.createQuestion = async (req, res, next) => {
   try {
     const newQ = await AskMe.create(req.body);
-    console.log("............req.body", req.body);
+    console.log("............req.body", req.body); // remove console logs before pushing
 
     res.status(201).json(newQ);
   } catch (error) {

@@ -9,7 +9,7 @@ const {
 
 // Middleware
 const passport = require("passport");
-
+// REVIEW: Cleanup your requires
 const router = express.Router();
 
 // List

@@ -41,6 +41,8 @@ router.post(
   passport.authenticate("local", { session: false }),
   signin
 );
+
+// REVIEW: You don't need to pass the user ID when deleting a trip, the user ID comes from the jwt strategy and is passed inside `req.user`.
 // Delete user used only in BE
 router.delete("/:userId", deleteUser);
 
@@ -51,6 +53,8 @@ router.put(
   upload.single("image"),
   userUpdate
 );
+
+// REVIEW: You don't need to pass the user ID when creating a trip, the user ID comes from the jwt strategy and is passed inside `req.user`.
 // Create trip
 router.post(
   "/:userId/trip",
@@ -59,6 +63,7 @@ router.post(
   tripCreate
 );
 
+// REVIEW: You don't need to pass the user ID when creating a list, the user ID comes from the jwt strategy and is passed inside `req.user`.
 // Create list
 router.post(
   "/:userId/list",

@@ -1,6 +1,7 @@
 // Data
 const { ListTrip } = require("../db/models");
 
+// REVIEW: You're not using this function, remove it
 exports.fetchListTrip = async (listTripId, next) => {
   try {
     const listTrip = await List.findByPk(listTripId);

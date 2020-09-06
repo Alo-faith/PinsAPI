@@ -2,21 +2,21 @@ const express = require("express");
 
 // Controllers
 const {
-  askMeList,
+  askList,
   answerUpdate,
-  askMeDelete,
-  fetchAskMe,
-} = require("../controllers/AskMeController");
+  askDelete,
+  fetchAsk,
+} = require("../controllers/AskController");
 
 // Middleware
 const passport = require("passport");
 
 const router = express.Router();
 
-router.param("askMeId", async (req, res, next, askMeId) => {
-  const askMe = await fetchAskMe(askMeId, next);
-  if (askMe) {
-    req.askMe = askMe;
+router.param("askId", async (req, res, next, askId) => {
+  const ask = await fetchAsk(askId, next);
+  if (ask) {
+    req.ask = ask;
     next();
   } else {
     const err = new Error("not found");
@@ -26,18 +26,18 @@ router.param("askMeId", async (req, res, next, askMeId) => {
 });
 
 // List
-router.get("/", askMeList);
+router.get("/", askList);
 
 // Delete
 router.delete(
-  "/:askMeId",
+  "/:askId",
   passport.authenticate("jwt", { session: false }),
-  askMeDelete
+  askDelete
 );
 
 // Update
 router.put(
-  "/:askMeId",
+  "/:askId",
   // passport.authenticate("jwt", { session: false }),
   answerUpdate
 );

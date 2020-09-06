@@ -31,6 +31,10 @@ User.init(
     image: {
       type: DataTypes.STRING,
     },
+
+    bio: {
+      type: DataTypes.STRING,
+    },
   },
   {
     sequelize: db,

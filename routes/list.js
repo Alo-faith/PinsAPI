@@ -6,7 +6,8 @@ const {
   updateList,
   deleteList,
   fetchList,
-  createList,
+  createListTrip,
+  deleteListTrip,
 } = require("../controllers/ListController");
 
 // Middleware
@@ -25,22 +26,33 @@ router.param("listId", async (req, res, next, listId) => {
     next(err);
   }
 });
-
 // List
 router.get("/", list);
 
-// Delete
+// Delete list
 router.delete(
   "/:listId",
-  // passport.authenticate("jwt", { session: false }),
+  passport.authenticate("jwt", { session: false }),
   deleteList
 );
 
-// Update
+// Update list
 router.put(
   "/:listId",
   passport.authenticate("jwt", { session: false }),
   updateList
+);
+// Create ListTrip
+router.post(
+  "/:listId",
+  passport.authenticate("jwt", { session: false }),
+  createListTrip
+);
+// Delete listTrip
+router.delete(
+  "/:listId/trips/:tripId",
+  passport.authenticate("jwt", { session: false }),
+  deleteListTrip
 );
 
 module.exports = router;

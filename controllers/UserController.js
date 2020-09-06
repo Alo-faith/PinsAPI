@@ -3,7 +3,7 @@ const { JWT_SECRET, JWT_EXPIRATION_MS } = require("../config/keys");
 const jwt = require("jsonwebtoken");
 
 // Database
-const { User, List } = require("../db/models");
+const { User, List, Trip } = require("../db/models");
 
 exports.fetchUser = async (userId, next) => {
   try {
@@ -41,11 +41,16 @@ exports.signup = async (req, res, next) => {
       email: newUser.email,
       firstName: newUser.firstName,
       lastName: newUser.lastName,
-
-      // exp: Date.now() + JWT_EXPIRATION_MS,
     };
     const token = jwt.sign(JSON.stringify(payload), JWT_SECRET);
-    res.status(201).json({ token });
+
+    const defultList = await List.create({
+      userId: payload.id,
+      title: "Want To Go",
+      defaultList: true,
+    });
+
+    res.status(201).json({ token, defultList });
   } catch (error) {
     next(error);
   }
@@ -61,59 +66,78 @@ exports.signin = async (req, res, next) => {
     firstName: user.firstName,
     lastName: user.lastName,
     image: user.image,
-
-    // exp: Date.now() + JWT_EXPIRATION_MS,
   };
   const token = jwt.sign(JSON.stringify(payload), JWT_SECRET);
   res.json({ token });
 };
 
-// Update
+// Update user profile
 exports.userUpdate = async (req, res, next) => {
   try {
-    // if (req.user.id === req.body.id) {
-    if (req.file) {
-      req.body.image = `${req.protocol}://${req.get("host")}/media/${
-        req.file.filename
-      }`;
+    if (req.user.id === req._user.id) {
+      if (req.file) {
+        req.body.image = `${req.protocol}://${req.get("host")}/media/${
+          req.file.filename
+        }`;
+      }
+
+      await req.user.update(req.body);
+      res.status(204).end();
+    } else {
+      const err = new Error("Unauthoized");
+      err.status = 401;
+      next(err);
     }
-
-    await req.user.update(req.body);
-    res.status(204).end();
-    // } else {
-    //   const err = new Error("Unauthoized");
-    //   err.status = 401;
-    //   next(err);
-    // }
   } catch (error) {
     next(error);
   }
 };
 
-// Create List
-exports.createList = async (req, res, next) => {
-  try {
-    req.body.userId = req.user.id;
-
-    const newList = await List.create(req.body);
-
-    res.status(201).json(newList);
-  } catch (error) {
-    next(error);
-  }
-};
-
-// Delete
+// Delete user used only in BE
 exports.deleteUser = async (req, res, next) => {
   try {
-    // if (req.user.id === req.body.user.id) {
-    await req.user.destroy();
+    await req._user.destroy();
     res.status(204).end();
-    // } else {
-    //   const err = new Error("Unauthoized");
-    //   err.status = 401;
-    //   next(err);
-    // }
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Create Trip
+exports.tripCreate = async (req, res, next) => {
+  try {
+    if (req.user.id === req._user.id) {
+      if (req.file) {
+        req.body.image = `${req.protocol}://${req.get("host")}/media/${
+          req.file.filename
+        }`;
+      }
+
+      req.body.userId = req.user.id;
+      const newTrip = await Trip.create(req.body);
+      res.status(201).json(newTrip);
+    } else {
+      const err = new Error("Unauthoized");
+      err.status = 401;
+      next(err);
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Create user list
+exports.createList = async (req, res, next) => {
+  try {
+    if (req.user.id === req._user.id) {
+      req.body.userId = req.user.id;
+      const newList = await List.create(req.body);
+      res.status(201).json(newList);
+    } else {
+      const err = new Error("Unauthoized");
+      err.status = 401;
+      next(err);
+    }
   } catch (error) {
     next(error);
   }

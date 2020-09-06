@@ -28,25 +28,16 @@ router.param("tripId", async (req, res, next, tripId) => {
   }
 });
 
-// List
+// Trip list
 router.get("/", tripList);
 
-// Create
-router.post(
-  "/",
-  passport.authenticate("jwt", { session: false }),
-  upload.single("image"),
-  tripCreate
-);
-
-// Delete
+// Delete trip
 router.delete(
   "/:tripId",
   passport.authenticate("jwt", { session: false }),
   tripDelete
 );
-
-// Update
+// Update trip
 router.put(
   "/:tripId",
   passport.authenticate("jwt", { session: false }),
@@ -54,6 +45,10 @@ router.put(
   tripUpdate
 );
 // Create question
-router.post("/:tripId/askme", createQuestion);
+router.post(
+  "/:tripId",
+  passport.authenticate("jwt", { session: false }),
+  createQuestion
+);
 
 module.exports = router;

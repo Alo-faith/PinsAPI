@@ -12,7 +12,6 @@ Trip.init(
 
     image: {
       type: DataTypes.STRING,
-      allowNull: false,
     },
     details: {
       type: DataTypes.STRING,

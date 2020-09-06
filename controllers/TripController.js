@@ -1,5 +1,5 @@
 // Data
-const { Trip, AskMe } = require("../db/models");
+const { Trip, Ask } = require("../db/models");
 
 exports.fetchTrip = async (tripId, next) => {
   try {
@@ -10,38 +10,17 @@ exports.fetchTrip = async (tripId, next) => {
   }
 };
 
-// List
+// Trip List
 exports.tripList = async (req, res, next) => {
   try {
-    const trips = await Trip.findAll({
-      // attributes: { exclude: ["createdAt", "updatedAt"] },
-    });
-
+    const trips = await Trip.findAll();
     res.json(trips);
   } catch (error) {
     next(error);
   }
 };
 
-// Create
-exports.tripCreate = async (req, res, next) => {
-  try {
-    if (req.file) {
-      req.body.image = `${req.protocol}://${req.get("host")}/media/${
-        req.file.filename
-      }`;
-    }
-
-    req.body.userId = req.user.id;
-    const newTrip = await Trip.create(req.body);
-
-    res.status(201).json(newTrip);
-  } catch (error) {
-    next(error);
-  }
-};
-
-// Delete
+// Delete Trip
 exports.tripDelete = async (req, res, next) => {
   try {
     if (req.user.id === req.trip.userId) {
@@ -57,7 +36,7 @@ exports.tripDelete = async (req, res, next) => {
   }
 };
 
-// Update
+// Update Trip
 exports.tripUpdate = async (req, res, next) => {
   try {
     if (req.user.id === req.trip.userId) {
@@ -78,13 +57,19 @@ exports.tripUpdate = async (req, res, next) => {
     next(error);
   }
 };
-//   Create Q
+//   Create Question
 exports.createQuestion = async (req, res, next) => {
   try {
-    const newQ = await AskMe.create(req.body);
-    console.log("............req.body", req.body);
-
-    res.status(201).json(newQ);
+    if (req.user.id !== req.trip.userId) {
+      req.body.userId = req.user.id;
+      req.body.tripId = req.trip.id;
+      const newQ = await Ask.create(req.body);
+      res.status(201).json(newQ);
+    } else {
+      const err = new Error("Unauthoized");
+      err.status = 401;
+      next(err);
+    }
   } catch (error) {
     next(error);
   }

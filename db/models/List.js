@@ -8,10 +8,11 @@ List.init(
     title: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: {
-        args: true,
-        msg: "Username already exists",
-      },
+    },
+
+    defaultList: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
     },
   },
   {
